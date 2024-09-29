@@ -1,29 +1,11 @@
 import express from 'express';
+import publicRoutes from './routes/public.js';
 
 const app = express();
 app.use(express.json());
 
-const users = []
+app.use('/', publicRoutes);
 
-// console.log("### process.env ###");
-// console.log(process.env.DB_USERNAME);
-// console.log(process.env.DB_PASSWORD);
-// console.log(process.env.DB_URL);
-
-// const completeUrl = process.env.DB_URL.replace("<DB_USERNAME>", process.env.DB_USERNAME)
-// .replace("<DB_PASSWORD>", process.env.DB_PASSWORD).replace("<DB_NAME>", process.env.DB_NAME);
-
-// console.log(`\n ${completeUrl}`);
-
-// console.log("###################");
-
-app.get('/users', (req, res) => {    
-    res.status(200).json(users);
+app.listen(3333, () => {
+    console.log('Server is running on port 3333');
 });
-
-app.post('/user', (req, res) => {
-users.push(req.body);
-res.sendStatus(201);
-});
-
-app.listen(3333);
