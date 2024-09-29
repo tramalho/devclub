@@ -34,9 +34,8 @@ router.get("/users", async (req, res) => {
 });
 
 router.post("/user", async (req, res) => {
-  const user = req.body;
-
   try {
+    const user = req.body;
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(user.password, salt);
 
@@ -54,5 +53,31 @@ router.post("/user", async (req, res) => {
     res.status(500).json({ message: "Internal Server Error, try again" });
   }
 });
+
+router.post("/login", async (req, res) => {
+  try {
+    const user = req.body;
+
+    const userSearched = await prisma.user.findUnique({
+      where: {
+        email: user.email,
+      },
+    });
+
+    if (!userSearched) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    res.status(200).json(userSearched);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Internal Server Error, try again" });
+  }
+});
+
+Request.prototype.catchError = (error) => {
+  console.log(error);
+  res.status(500).json({ message: "Internal Server Error, try again" });
+};
 
 export default router;
