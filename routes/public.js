@@ -68,7 +68,13 @@ router.post("/login", async (req, res) => {
       return res.status(404).json({ message: "User not found" });
     }
 
-    res.status(200).json(userSearched);
+    const isMatch = await bcrypt.compare(user.password, userSearched.password);
+
+    if (!isMatch) {
+      return res.status(400).json({ message: "Invalid User or Password" });
+    }
+
+    res.sendStatus(200);
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: "Internal Server Error, try again" });
