@@ -1,21 +1,10 @@
 import express from "express";
 import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 
 const prisma = new PrismaClient();
 const router = express.Router();
-
-// console.log("### process.env ###");
-// console.log(process.env.DB_USERNAME);
-// console.log(process.env.DB_PASSWORD);
-// console.log(process.env.DB_URL);
-
-// const completeUrl = process.env.DB_URL.replace("<DB_USERNAME>", process.env.DB_USERNAME)
-// .replace("<DB_PASSWORD>", process.env.DB_PASSWORD).replace("<DB_NAME>", process.env.DB_NAME);
-
-// console.log(`\n ${completeUrl}`);
-
-// console.log("###################");
 
 router.get("/users", async (req, res) => {
   try {
@@ -23,6 +12,7 @@ router.get("/users", async (req, res) => {
       select: {
         id: true,
         name: true,
+        age: true,
         email: true,
       },
     });
@@ -43,11 +33,49 @@ router.post("/user", async (req, res) => {
       data: {
         name: user.name,
         email: user.email,
+        age: user.age,
         password: hashedPassword,
       },
     });
 
-    res.status(201).json(userSaved);
+    res.status(201).json({ message: `Success created user: ${userSaved.id}` });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: error.message });
+  }
+});
+
+router.put("/user/:id", async (req, res) => {
+  try {
+    const user = req.body;
+
+    const userSaved = await prisma.user.update({
+      where: {
+        id: req.params.id,
+      },
+      data: {
+        name: user.name,
+        age: user.age,
+        email: user.email,
+      },
+    });
+
+    res.status(201).json({ message: "Success Operation!" });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: error.message });
+  }
+});
+
+router.delete("/user/:id", async (req, res) => {
+  try {
+    const userDeleted = await prisma.user.delete({
+      where: {
+        id: req.params.id,
+      },
+    });
+
+    res.status(200).json({ message: "User Deleted!" });
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: "Internal Server Error, try again" });
@@ -74,7 +102,11 @@ router.post("/login", async (req, res) => {
       return res.status(400).json({ message: "Invalid User or Password" });
     }
 
-    res.sendStatus(200);
+    const jwtValue = jwt.sign({ id: userSearched.id }, process.env.JWT_SECRET, {
+      expiresIn: "1m",
+    });
+
+    res.status(200).json(jwtValue);
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: "Internal Server Error, try again" });
