@@ -8,7 +8,19 @@ const router = express.Router();
 
 router.get("/users", async (req, res) => {
   try {
+    let where = {};
+    if (req.query) {
+      where = {
+        name: {
+          contains: req.query.name,
+        },
+        age: req.query.age,
+        email: req.query.email,
+      };
+    }
+
     const allUsers = await prisma.user.findMany({
+      where: where,
       select: {
         id: true,
         name: true,

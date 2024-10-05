@@ -1,0 +1,110 @@
+{
+    "clientName": "Thunder Client",
+    "collectionName": "devclub",
+    "collectionId": "a6ed3102-6bfc-4235-a4bc-93b92d5c8bd2",
+    "dateExported": "2024-10-05T18:15:38.309Z",
+    "version": "1.2",
+    "folders": [],
+    "requests": [
+        {
+            "_id": "bf6b66a0-7bd3-4b3e-8987-52ca0c5a22a3",
+            "colId": "a6ed3102-6bfc-4235-a4bc-93b92d5c8bd2",
+            "containerId": "",
+            "name": "/users",
+            "url": "{{host}}/users",
+            "method": "GET",
+            "sortNum": 10000,
+            "created": "2024-09-29T11:35:02.116Z",
+            "modified": "2024-10-05T18:06:02.035Z",
+            "headers": []
+        },
+        {
+            "_id": "4f51a494-02df-4b66-ac07-7a5a064486fa",
+            "colId": "a6ed3102-6bfc-4235-a4bc-93b92d5c8bd2",
+            "containerId": "",
+            "name": "/user",
+            "url": "{{host}}/user",
+            "method": "POST",
+            "sortNum": 20000,
+            "created": "2024-09-29T17:25:44.257Z",
+            "modified": "2024-10-05T18:13:15.631Z",
+            "headers": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"name\": \"{{#name}}\",\n  \"email\": \"{{#email}}\",\n  \"password\": \"pass\",\n  \"age\": \"{{#number, 1, 99}}\"\n}",
+                "form": []
+            }
+        },
+        {
+            "_id": "d160fec1-7a6b-4824-9566-190e04508fd6",
+            "colId": "a6ed3102-6bfc-4235-a4bc-93b92d5c8bd2",
+            "containerId": "",
+            "name": "/users by",
+            "url": "{{host}}/users?name=B&age=41",
+            "method": "GET",
+            "sortNum": 20000,
+            "created": "2024-10-05T18:05:35.865Z",
+            "modified": "2024-10-05T18:14:19.990Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "name",
+                    "value": "B",
+                    "isPath": false
+                },
+                {
+                    "name": "age",
+                    "value": "41",
+                    "isPath": false
+                }
+            ]
+        },
+        {
+            "_id": "3e58513c-60e1-4bd8-8a6d-a8534b4fad56",
+            "colId": "a6ed3102-6bfc-4235-a4bc-93b92d5c8bd2",
+            "containerId": "",
+            "name": "/login",
+            "url": "{{host}}/login",
+            "method": "POST",
+            "sortNum": 30000,
+            "created": "2024-09-29T21:20:16.835Z",
+            "modified": "2024-09-30T02:34:23.097Z",
+            "headers": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"email\": \"email5@email.com\",\n  \"password\": \"pass\"\n}",
+                "form": []
+            }
+        },
+        {
+            "_id": "8c8115c7-6fcd-4b7b-b029-af47bd172872",
+            "colId": "a6ed3102-6bfc-4235-a4bc-93b92d5c8bd2",
+            "containerId": "",
+            "name": "/user",
+            "url": "{{host}}/user/6700a1cda18b09f31e7fda91",
+            "method": "PUT",
+            "sortNum": 30000,
+            "created": "2024-10-04T02:28:51.788Z",
+            "modified": "2024-10-05T10:03:59.258Z",
+            "headers": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"name\": \"John Doe\",\n  \"age\": \"42\",\n  \"email\": \"email5@email.com\"\n}\n",
+                "form": []
+            }
+        },
+        {
+            "_id": "d22e7aac-b92c-449b-ba57-2cbb0ac64d2a",
+            "colId": "a6ed3102-6bfc-4235-a4bc-93b92d5c8bd2",
+            "containerId": "",
+            "name": "/user",
+            "url": "{{host}}/user/6701105e9788bd8db124bf37",
+            "method": "DELETE",
+            "sortNum": 40000,
+            "created": "2024-10-05T10:06:32.201Z",
+            "modified": "2024-10-05T10:12:53.926Z",
+            "headers": []
+        }
+    ],
+    "ref": "_ifjZvl0BMSL5Y05CVoSZfiUiEynVa76EzFJF5UqCd02daLAW1JdOj8ZBnlvRmzq1-kHJiO7NCjd05nT-JRquw"
+}

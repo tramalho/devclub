@@ -26,6 +26,7 @@ node --env-file=.env --watch server.js
 
 ## Routes
 - [GET] /users
+- [GET] /users By (query params)
 - [POST] /user
 - [PUT] /user:id
 - [DELETE] /user:id
