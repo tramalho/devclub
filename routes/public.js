@@ -3,36 +3,13 @@ import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
-const prisma = new PrismaClient();
 const router = express.Router();
-
-router.get("/users", async (req, res) => {
-  try {
-    let where = {};
-    if (req.query) {
-      where = {
-        name: {
-          contains: req.query.name,
-        },
-        age: req.query.age,
-        email: req.query.email,
-      };
-    }
-
-    const allUsers = await prisma.user.findMany({
-      where: where,
-      select: {
-        id: true,
-        name: true,
-        age: true,
-        email: true,
-      },
-    });
-    res.status(200).json(allUsers);
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({ message: "Internal Server Error, try again" });
-  }
+const prisma = new PrismaClient({
+  omit: {
+    user: {
+      password: true,
+    },
+  },
 });
 
 router.post("/user", async (req, res) => {
@@ -99,6 +76,9 @@ router.post("/login", async (req, res) => {
     const user = req.body;
 
     const userSearched = await prisma.user.findUnique({
+      omit: {
+        password: false,
+      },
       where: {
         email: user.email,
       },
